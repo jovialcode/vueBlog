@@ -1,7 +1,7 @@
 const path = require('path-browserify');
 
 const config = {
-    imgPath : path.resolve(__dirname, '../public/img'),
+    imgPath : 'img/',
 };
 
 export default config;
