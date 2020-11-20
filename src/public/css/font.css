@@ -1,0 +1,12 @@
+/*  MountainsOfChristmas  */
+@font-face {
+    font-family:'MountainsofChristmas-Bold';
+    src : url('/font/MountainsofChristmas-Bold.ttf');
+    font-style:normal;
+}
+
+@font-face {
+    font-family:'MountainsofChristmas-Regular';
+    src : url('/font/MountainsofChristmas-Regular.ttf');
+    font-style:normal;
+}

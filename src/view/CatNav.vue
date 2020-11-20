@@ -1,6 +1,5 @@
 <template>
-    <div id="nav">
-        <button v-on:click="leftSlide">left</button>
+    <div id="catNav">
         <ul class="navList">
             <li v-for="item in navList">
                 <a :title=item.text>
@@ -8,7 +7,6 @@
                 </a>
             </li>
         </ul>
-        <button v-on:click="rightSlide">right</button>
     </div>
 </template>
 
@@ -17,32 +15,24 @@
 
     const navList = [
         {
-            text : 'article',
+            text : 'britishShortHair',
             img : `${config.imgPath}/snowman.png`
         },
         {
-            text : 'game',
+            text : 'persian',
             img : `${config.imgPath}/ornament.png`
         },
         {
-            text : 'game',
+            text : 'bengal',
             img : `${config.imgPath}/tree.png`
         }
     ];
 
     export default {
-        name: "Nav",
+        name: "CatNav",
         data(){
             return {
                 navList : navList
-            }
-        },
-        methods : {
-            leftSlide(){
-                console.log('클릭 left')
-            },
-            rightSlide(){
-                console.log('클릭 right')
             }
         }
     }
@@ -54,30 +44,27 @@
         height: 100%;
     }
 
-    #nav{
+    #catNav{
         position:absolute;
-        bottom: 0;
         left: 0;
-        right: 0;
+        top : calc(40vh);
 
         display: flex;
         justify-content: center;
         align-items: center;
 
-        height: 80px;
-        margin-bottom: 25px;
+        margin-left: 25px;
 
         .navList {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
 
             > li {
                 width: 50px;
                 height: 50px;
-                border-radius: 50%;
                 text-align: center;
 
-                margin-right: 12px;
+                margin-bottom: 12px;
 
                 a {
                     display: block;
@@ -95,7 +82,7 @@
                 }
 
                 &:last-child{
-                    margin-right: 0;
+                    margin-bottom: 0;
                 }
             }
         }
