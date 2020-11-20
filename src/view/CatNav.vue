@@ -15,16 +15,12 @@
 
     const navList = [
         {
-            text : 'britishShortHair',
-            img : `${config.imgPath}/snowman.png`
+            text : 'cat',
+            img : `${config.imgPath}/cat.png`
         },
         {
-            text : 'persian',
-            img : `${config.imgPath}/ornament.png`
-        },
-        {
-            text : 'bengal',
-            img : `${config.imgPath}/tree.png`
+            text : 'dog',
+            img : `${config.imgPath}/dog.png`
         }
     ];
 

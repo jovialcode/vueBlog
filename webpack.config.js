@@ -16,7 +16,7 @@ module.exports = {
         rules: [
             { test: /\.js$/, use: 'babel-loader' },
             { test: /\.vue$/, use: 'vue-loader' },
-            { test: /\.(css|scss)$/, use: ['style-loader', 'css-loader', 'sass-loader']},
+            { test: /\.(css|scss)$/, exclude: /node_modules/, use: ['style-loader', 'css-loader', 'sass-loader']},
         ]
     },
     devServer: {

@@ -1,19 +1,20 @@
 <template>
     <div id="nav">
-        <button v-on:click="leftSlide">left</button>
-        <ul class="navList">
-            <li v-for="item in navList">
-                <a :title=item.text>
-                    <img v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
-                </a>
-            </li>
-        </ul>
-        <button v-on:click="rightSlide">right</button>
+        <Slick v-bind:setting="setting">
+            <ul class="navList">
+                <li v-for="item in navList">
+                    <a :title=item.text>
+                        <img v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
+                    </a>
+                </li>
+            </ul>
+        </Slick>
     </div>
 </template>
 
 <script>
     import config from "../config/config";
+    import Slick from "./component/Slick";
 
     const navList = [
         {
@@ -27,22 +28,24 @@
         {
             text : 'game',
             img : `${config.imgPath}/tree.png`
+        },
+        {
+            text : 'rudolph',
+            img : `${config.imgPath}/rudolph.png`
         }
     ];
+    const setting = {
+        "slidesToShow": 1
+        , "slidesToScroll": 1
+    };
 
     export default {
-        name: "Nav",
-        data(){
+        name: "Nav"
+        , components : {Slick}
+        , data(){
             return {
                 navList : navList
-            }
-        },
-        methods : {
-            leftSlide(){
-                console.log('클릭 left')
-            },
-            rightSlide(){
-                console.log('클릭 right')
+                , setting : setting
             }
         }
     }
