@@ -1,13 +1,16 @@
 <template>
-    <div id="slickWrapper" ref="slickWrapper">
+    <div class="slick" ref="slick">
+        <div id="slideWrapper" ref="slideWrapper">
+            <slot/>
+        </div>
         <button class="leftButton" v-on:click="leftSlide"><</button>
-        <slot/>
         <button class="rightButton" v-on:click="rightSlide">></button>
     </div>
 </template>
 
 <script>
-    let leftIndex = 0;
+    let slides, slideSpeed, slideWidth, slideLen;
+    let curIndex = 0;
 
     export default{
         name : "Slick"
@@ -17,24 +20,42 @@
             }
         }
         , mounted(){
-            this.$refs.slickWrapper.style.width = `${this.$slots["default"][0].elm.clientWidth + 100}px`;
-            this.$refs.slickWrapper.style.height = `${this.$slots["default"][0].elm.clientHeight}px`;
+            const setting = this.$options.propsData['setting'];
+            const slidesToShow = setting['slidesToShow'];
+            slides = this.$slots['default'][0].elm;
+            slides.style.transition = slideSpeed + "ms";
+            slideLen = slides.childElementCount;
 
-            const $ul = this.$slots["default"][0].elm;
-            const $liList = $ul.children;
-            const maxCountSlideToShow = this.$options.propsData['setting'].slidesToShow;
-            let countSlideToShow = 0;
+            const slidesWidth = slides.clientWidth;
+            const slidesHeight = slides.clientHeight;
 
-            while(countSlideToShow < maxCountSlideToShow && countSlideToShow < $liList.length){
-                $liList[countSlideToShow++].style.display = "none";
-            }
+            slideWidth = slidesWidth / slideLen;
+            
+            const slideWrapperWidth = slideWidth * slidesToShow;
+
+            this.$refs.slideWrapper.style.width = `${slideWrapperWidth}px`;
+            this.$refs.slideWrapper.style.height = `${slidesHeight}px`;
+            this.$refs.slick.style.width = `${slidesWidth}px`;
         }
         , methods : {
             leftSlide(){
-                console.log('클릭 left')
+                if (curIndex < slideLen - 1) {
+                    slides.style.transform = "translate3d(-" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
+                } else {
+                    slides.style.transform = "translate3d(0px, 0px, 0px)";
+                    curIndex = -1;
+                }
+                curIndex += 1;
+
             },
             rightSlide(){
-                console.log('클릭 right')
+                if (curIndex < slideLen - 1) {
+                    slides.style.transform = "translate3d(+" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
+                } else {
+                    slides.style.transform = "translate3d(0px, 0px, 0px)";
+                    curIndex = -1;
+                }
+                curIndex += 1;
             }
         }
         // , data(){
@@ -45,22 +66,34 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    #slickWrapper{
+<style lang="scss">
+    @mixin maxSize{
+        width: 100%;
+        height: 100%;
+    }
+
+    .slick{
+        position: relative;
+
         display: flex;
         flex-direction: row;
 
         justify-content: center;
         align-items: center;
-    }
 
-    .leftButton{
-        color:#ffffff;
-        margin-right: 15px;
-    }
+        #slideWrapper{
+            position: relative;
+            overflow : hidden;
+        }
 
-    .rightButton{
-        color:#ffffff;
-        margin-left: 15px;
+        .leftButton{
+            position: absolute;
+            left : 0;
+            color:#ffffff;
+        }
+
+        .rightButton{
+            color:#ffffff;
+        }
     }
 </style>

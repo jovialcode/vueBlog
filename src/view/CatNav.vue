@@ -2,9 +2,9 @@
     <div id="catNav">
         <ul class="navList">
             <li v-for="item in navList">
-                <a :title=item.text>
+                <button :title=item.text v-on:>
                     <img v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
-                </a>
+                </button>
             </li>
         </ul>
     </div>
@@ -25,11 +25,14 @@
     ];
 
     export default {
-        name: "CatNav",
-        data(){
+        name: "CatNav"
+        , data(){
             return {
                 navList : navList
             }
+        }
+        , methods: {
+
         }
     }
 </script>
@@ -62,7 +65,7 @@
 
                 margin-bottom: 12px;
 
-                a {
+                button {
                     display: block;
                     @include maxSize;
 

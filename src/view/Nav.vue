@@ -35,8 +35,10 @@
         }
     ];
     const setting = {
-        "slidesToShow": 1
+        "isHorizontal" : true
+        , "slidesToShow": 2
         , "slidesToScroll": 1
+        , "slideMarginRight" : 12
     };
 
     export default {
@@ -71,13 +73,16 @@
         margin-bottom: 25px;
 
         .navList {
+            width: 240px;
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
+            overflow-x: hidden;
 
             > li {
+                float:left;
                 width: 50px;
                 height: 50px;
-                border-radius: 50%;
                 text-align: center;
 
                 margin-right: 12px;
