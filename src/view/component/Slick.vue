@@ -9,8 +9,26 @@
 </template>
 
 <script>
-    let slides, slideSpeed, slideWidth, slideLen;
+    import util from '../../util/util';
+    let slideList;
+    let slideConfig = {
+        slideSpeed : 300 // 슬라이드 속력
+        , slideWidth : null // 슬라이드 1장 너비
+        , slideCount : null // 슬라이드 총 개수
+        , slidesToShow : null // 슬라이드했을 때 카운트
+    };
     let curIndex = 0;
+    let fn = {
+        slide(isLeft){
+            if (curIndex < slideConfig['slideCount'] - 1) {
+                slideList.style.transform = util.stringFormat('translate3d({0}{1}px, 0px, 0px)', isLeft? '-': '+', slideConfig['slideWidth'] * (curIndex + 1));
+            } else {
+                slideList.style.transform = "translate3d(0px, 0px, 0px)";
+                curIndex = -1;
+            }
+            curIndex += 1;
+        }
+    };
 
     export default{
         name : "Slick"
@@ -19,50 +37,35 @@
                 type : Object
             }
         }
-        , mounted(){
-            const setting = this.$options.propsData['setting'];
-            const slidesToShow = setting['slidesToShow'];
-            slides = this.$slots['default'][0].elm;
-            slides.style.transition = slideSpeed + "ms";
-            slideLen = slides.childElementCount;
-
-            const slidesWidth = slides.clientWidth;
-            const slidesHeight = slides.clientHeight;
-
-            slideWidth = slidesWidth / slideLen;
-            
-            const slideWrapperWidth = slideWidth * slidesToShow;
-
-            this.$refs.slideWrapper.style.width = `${slideWrapperWidth}px`;
-            this.$refs.slideWrapper.style.height = `${slidesHeight}px`;
-            this.$refs.slick.style.width = `${slidesWidth}px`;
-        }
         , methods : {
             leftSlide(){
-                if (curIndex < slideLen - 1) {
-                    slides.style.transform = "translate3d(-" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
-                } else {
-                    slides.style.transform = "translate3d(0px, 0px, 0px)";
-                    curIndex = -1;
-                }
-                curIndex += 1;
-
+                fn.slide(true);
             },
             rightSlide(){
-                if (curIndex < slideLen - 1) {
-                    slides.style.transform = "translate3d(+" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
-                } else {
-                    slides.style.transform = "translate3d(0px, 0px, 0px)";
-                    curIndex = -1;
-                }
-                curIndex += 1;
+                fn.slide(false);
             }
         }
-        // , data(){
-        //     return {
-        //         navList : slideList
-        //     }
-        // }
+        , created(){
+            const setting = this.$options.propsData['setting'];
+            slideConfig['slidesToShow'] = setting['slidesToShow'];
+            slideConfig['slideSpeed'] = setting['slideSpeed'] | slideConfig['slideSpeed'];
+        }
+        , mounted(){
+            slideList = this.$slots['default'][0].elm;
+            slideList.style.transition = slideConfig['slideSpeed'] + "ms";
+            const slideListWidth = slideList.clientWidth;
+            const slideListHeight = slideList.clientHeight;
+
+            slideConfig['slideCount'] = slideList.childElementCount;
+            slideConfig['slideWidth'] = slideListWidth / slideConfig['slideCount'];
+
+            const slideWrapperWidth = slideConfig['slideWidth'] * slideConfig['slidesToShow'];
+
+            this.$refs.slideWrapper.style.width = `${slideWrapperWidth}px`;
+            this.$refs.slideWrapper.style.height = `${slideListHeight}px`;
+            this.$refs.slick.style.width = `${slideListWidth}px`;
+        }
+
     }
 </script>
 
