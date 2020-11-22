@@ -17,16 +17,24 @@
         , slideCount : null // 슬라이드 총 개수
         , slidesToShow : null // 슬라이드했을 때 카운트
     };
-    let curIndex = 0;
+    let curIndex = 1, curPosition = 0;
     let fn = {
         slide(isLeft){
-            if (curIndex < slideConfig['slideCount'] - 1) {
-                slideList.style.transform = util.stringFormat('translate3d({0}{1}px, 0px, 0px)', isLeft? '-': '+', slideConfig['slideWidth'] * (curIndex + 1));
+            isLeft && curIndex > 0 ? curIndex-- : curIndex++;
+
+            if (curIndex > 0 && curIndex < slideConfig['slideCount']) {
+                curPosition = curPosition + (isLeft? (slideConfig['slideWidth']) : -slideConfig['slideWidth']);
+                slideList.style.transform = util.stringFormat('translate3d({0}px, 0px, 0px)', curPosition);
             } else {
-                slideList.style.transform = "translate3d(0px, 0px, 0px)";
-                curIndex = -1;
+                if(isLeft){
+                    curIndex = slideConfig['slideCount'] - 1;
+                    curPosition = -(slideConfig['slideWidth'] * (curIndex-1));
+                }else{
+                    curIndex = 1;
+                    curPosition = 0;
+                }
+                slideList.style.transform = util.stringFormat('translate3d({0}px, 0px, 0px)', curPosition);
             }
-            curIndex += 1;
         }
     };
 
@@ -63,7 +71,7 @@
 
             this.$refs.slideWrapper.style.width = `${slideWrapperWidth}px`;
             this.$refs.slideWrapper.style.height = `${slideListHeight}px`;
-            this.$refs.slick.style.width = `${slideListWidth}px`;
+            this.$refs.slick.style.width = `${slideWrapperWidth + 80}px`;
         }
 
     }
@@ -97,6 +105,8 @@
 
         .rightButton{
             color:#ffffff;
+            position: absolute;
+            right : 0;
         }
     }
 </style>

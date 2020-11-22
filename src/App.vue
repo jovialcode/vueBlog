@@ -1,5 +1,6 @@
 <template>
     <div id="app" v-on:drop="drop" v-on:dragover="dragOver">
+        <component v-for="creature in creatures" v-bind:is="creature.type" :key="creature.id"></component>
         <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
         <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
         <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
@@ -12,30 +13,51 @@
 <script>
     import Nav from "./view/Nav";
     import CatNav from "./view/CatNav";
+    import Cat from "./view/component/Cat";
     import Tree from "./view/component/Tree";
+    import EventBus from "./util/EventBus";
 
     let currentTarget;
 
     export default {
-        components: {Nav, Tree, CatNav},
-        methods:{
+        components : {Nav, Tree, CatNav, Cat}
+        , methods : {
             dragStart(event){
-                currentTarget = event.target;
-            },
-            dragOver(event){
+                currentTarget = event.currentTarget;
                 event.stopPropagation();
                 event.preventDefault();
-            },
-            drop(event){
-                event.stopPropagation();
-                event.preventDefault();
-                currentTarget.style.marginLeft = `${event.pageX- currentTarget.offsetWidth/2}px`;
-                currentTarget.style.marginTop = `${event.pageY- currentTarget.offsetHeight/2}px`;
             }
-        },
-        data() {
+            , dragOver(event){
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            , drop(event){
+                event.stopPropagation();
+                event.preventDefault();
+                currentTarget.style.left = `${event.pageX- currentTarget.offsetWidth/2}px`;
+                currentTarget.style.top = `${event.pageY- currentTarget.offsetHeight/2}px`;
+            }
+            , createCreature(name){
+                if(name === undefined) throw Error('no');
+                switch (name) {
+                    case 'cat' : {
+                        this.creatures.push({type : name, id: this.creaturesCount ++});
+                    }
+                    default:{
+
+                    }
+                }
+            }
+        }
+        , created(){
+            EventBus.$on('dragStart', this.dragStart);
+            EventBus.$on('createCreature', this.createCreature)
+        }
+        , data(){
             return {
-                message: 'Merry Christmas',
+                message: 'Merry Christmas'
+                , creatures : []
+                , creaturesCount : 0
             };
         },
     };

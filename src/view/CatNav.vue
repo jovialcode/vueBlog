@@ -2,7 +2,7 @@
     <div id="catNav">
         <ul class="navList">
             <li v-for="item in navList">
-                <button :title=item.text v-on:>
+                <button :name=item.text :title=item.text v-on:click="createCreature">
                     <img v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
                 </button>
             </li>
@@ -12,6 +12,7 @@
 
 <script>
     import config from "../config/config";
+    import EventBus from "../util/EventBus";
 
     const navList = [
         {
@@ -32,7 +33,10 @@
             }
         }
         , methods: {
-
+            createCreature(event){
+                const target = event.currentTarget;
+                EventBus.$emit('createCreature', target['name']);
+            }
         }
     }
 </script>
