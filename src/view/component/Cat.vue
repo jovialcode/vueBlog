@@ -5,14 +5,20 @@
          draggable="true"
          class="creature draggable"
          >
-        <img src="/img/persian.png">
+        <CreatureTool
+                v-if="isActive"
+        />
+        <img src="/img/christmastree.png">
     </div>
 </template>
 
 <script>
     import EventBus from "../../util/EventBus"
+    import CreatureTool from "./CreatureTool";
+
     export default {
         name: "Cat"
+        , components : {CreatureTool}
         , methods : {
             dragStart(event){
                 EventBus.$emit('dragStart', event);
@@ -20,7 +26,7 @@
             , click(){
                 this.isActive = !this.isActive;
                 if(this.isActive){
-                    EventBus.$emit('creatureActive', this);
+
                 }
             }
         },
@@ -36,6 +42,10 @@
     .creature{
         position: absolute;
         box-sizing: border-box;
+    }
+    .creature > img{
+        width: 100%;
+        height: 100%;
     }
     .creature.active > img{
         border: #ede1e0 2px dashed;
