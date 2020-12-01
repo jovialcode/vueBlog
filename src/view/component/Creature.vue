@@ -3,6 +3,7 @@
          v-on:click="clickCreature"
          v-bind:class="{active: isActive}"
          draggable="true"
+         v-bind:data-uuid=creatureUuid
          class="creature draggable"
          >
         <CreatureTool
@@ -39,7 +40,7 @@
     export default {
         name: "Creature"
         , components : {CreatureTool}
-        , props : ['creatureType']
+        , props : ['creatureType', 'creatureUuid']
         , methods : {
             dragStartCreature(event){
                 EventBus.$emit('dragStart', event);

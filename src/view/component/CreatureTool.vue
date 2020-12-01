@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import EventBus from "../../util/EventBus"
+
     export default {
         name : "CreatureTool"
         , methods : {
@@ -34,7 +36,8 @@
                 event.preventDefault();
 
                 const creature = event.currentTarget.closest('.creature');
-                creature.remove();
+                const uuid = creature.dataset.uuid;
+                EventBus.$emit('deleteCreature', uuid);
             }
         }
     }

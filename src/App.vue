@@ -1,8 +1,10 @@
 <template>
     <div id="app" v-on:drop="dropCreature" v-on:dragover="dragOverCreature">
-        <Creature v-for="creature in creatures" :creature-type="creature.type" :key="creature.id"></Creature>
+        <Creature v-for="creature in creatures" :creature-type="creature.type" :creature-uuid="creature.uuid" :key="creature.uuid"></Creature>
         <CreatureNavigation/>
         <Nav/>
+        <JukeBox/>
+        <Tools :creature-list="creatures"/>
     </div>
 </template>
 
@@ -10,12 +12,20 @@
     import Nav from "./view/Nav";
     import CreatureNavigation from "./view/CreatureNavigation";
     import Creature from "./view/component/Creature";
+    import JukeBox from "./view/component/JukeBox";
+    import Tools from "./view/component/Tools";
     import EventBus from "./util/EventBus";
 
     let currentTarget;
 
     export default {
-        components : {Nav, CreatureNavigation, Creature}
+        components : {
+            Nav
+            , CreatureNavigation
+            , Creature
+            , JukeBox
+            , Tools
+        }
         , methods : {
             dragStartCreature(event){
                 currentTarget = event.currentTarget;
@@ -36,20 +46,25 @@
                 currentTarget.style.top = `${event.pageY- currentTarget.offsetHeight/2}px`;
                 currentTarget = null;
             }
+            , deleteCreature(uuid){
+                const targetIndex = this.creatures.findIndex(x => x.uuid === Number(uuid));
+                this.creatures.splice(targetIndex, 1);
+            }
             , createCreature(name){
                 if(name === undefined) throw Error('no');
-                this.creatures.push({type : name, id: this.creaturesCount ++});
+                this.creatures.push({type : name, uuid: this.creaturesCount++});
             }
         }
         , created(){
             EventBus.$on('dragStart', this.dragStartCreature);
-            EventBus.$on('createCreature', this.createCreature)
+            EventBus.$on('createCreature', this.createCreature);
+            EventBus.$on('deleteCreature', this.deleteCreature);
         }
         , data(){
             return {
                 message: 'Merry Christmas'
                 , creatures : []
-                , creaturesCount : 0
+                , creaturesCount : 1
             };
         },
     };
