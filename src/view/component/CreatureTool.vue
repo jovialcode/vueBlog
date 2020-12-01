@@ -44,8 +44,8 @@
     .resizeButton {
         position: absolute;
 
-        bottom: -15px;
-        right: -15px;
+        bottom: -25px;
+        right: -20px;
 
         width: 38px;
         height: 38px;
@@ -53,5 +53,8 @@
     .deleteButton {
         position: absolute;
         right: 0;
+
+        top: -15px;
+        right: -15px;
     }
 </style>

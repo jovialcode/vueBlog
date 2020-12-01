@@ -1,6 +1,6 @@
 <template>
-    <div v-on:drag="dragStart"
-         v-on:click="click"
+    <div v-on:drag="dragStartCreature"
+         v-on:click="clickCreature"
          v-bind:class="{active: isActive}"
          draggable="true"
          class="creature draggable"
@@ -8,7 +8,9 @@
         <CreatureTool
                 v-if="isActive"
         />
-        <img src="/img/christmastree.png">
+        <img
+                :src="creatureConfig[creatureType].img"
+        />
     </div>
 </template>
 
@@ -16,29 +18,46 @@
     import EventBus from "../../util/EventBus"
     import CreatureTool from "./CreatureTool";
 
+    const creatureConfig = {
+        firePlace : {
+            img : '/img/firePlace.png'
+        }
+        , light : {
+            img : '/img/light.png'
+        }
+        , catShocks : {
+            img : '/img/catShocks.png'
+        }
+        , cat :{
+            img : '/img/persian.png'
+        }
+        , christmasTree : {
+            img : '/img/christmasTree.png'
+        }
+    };
+
     export default {
-        name: "Cat"
+        name: "Creature"
         , components : {CreatureTool}
+        , props : ['creatureType']
         , methods : {
-            dragStart(event){
+            dragStartCreature(event){
                 EventBus.$emit('dragStart', event);
             }
-            , click(){
+            , clickCreature(){
                 this.isActive = !this.isActive;
-                if(this.isActive){
-
-                }
             }
         },
         data(){
             return {
                 isActive : false
+                , creatureConfig : creatureConfig
             }
         }
     }
 </script>
 
-<style>
+<style lang="scss">
     .creature{
         position: absolute;
         box-sizing: border-box;

@@ -17,12 +17,24 @@
     const navList = [
         {
             text : 'cat',
-            img : `${config.imgPath}/cat.png`
+            img : `${config.imgPath}/persian.png`
         },
         {
-            text : 'dog',
-            img : `${config.imgPath}/dog.png`
-        }
+            text : 'catShocks',
+            img : `${config.imgPath}/catShocks.png`
+        },
+        {
+            text : 'light',
+            img : `${config.imgPath}/light.png`
+        },
+        {
+            text : 'firePlace',
+            img : `${config.imgPath}/firePlace.png`
+        },
+        {
+            text : 'christmasTree',
+            img : `${config.imgPath}/christmasTree.png`
+        },
     ];
 
     export default {
@@ -81,6 +93,7 @@
                         @include maxSize;
                         background-repeat: no-repeat;
                         background-position: center;
+                        background-size: contain;
                     }
                 }
 

@@ -1,56 +1,48 @@
 <template>
-    <div id="app" v-on:drop="drop" v-on:dragover="dragOver">
-        <component v-for="creature in creatures" v-bind:is="creature.type" :key="creature.id"></component>
-        <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
-        <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
-        <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
-        <span v-on:drag="dragStart" draggable="true" class="draggable">{{ message }}</span>
+    <div id="app" v-on:drop="dropCreature" v-on:dragover="dragOverCreature">
+        <Creature v-for="creature in creatures" :creature-type="creature.type" :key="creature.id"></Creature>
+        <CreatureNavigation/>
         <Nav/>
-        <CatNav/>
     </div>
 </template>
 
 <script>
     import Nav from "./view/Nav";
-    import CatNav from "./view/CatNav";
-    import Cat from "./view/component/Cat";
-    import Tree from "./view/component/Tree";
+    import CreatureNavigation from "./view/CreatureNavigation";
+    import Creature from "./view/component/Creature";
     import EventBus from "./util/EventBus";
 
     let currentTarget;
 
     export default {
-        components : {Nav, Tree, CatNav, Cat}
+        components : {Nav, CreatureNavigation, Creature}
         , methods : {
-            dragStart(event){
+            dragStartCreature(event){
                 currentTarget = event.currentTarget;
                 event.stopPropagation();
                 event.preventDefault();
             }
-            , dragOver(event){
+            , dragOverCreature(event){
                 event.stopPropagation();
                 event.preventDefault();
             }
-            , drop(event){
+            , dropCreature(event){
                 event.stopPropagation();
                 event.preventDefault();
+                if(currentTarget == null || currentTarget.classList.contains('active')){
+                    return;
+                }
                 currentTarget.style.left = `${event.pageX- currentTarget.offsetWidth/2}px`;
                 currentTarget.style.top = `${event.pageY- currentTarget.offsetHeight/2}px`;
+                currentTarget = null;
             }
             , createCreature(name){
                 if(name === undefined) throw Error('no');
-                switch (name) {
-                    case 'cat' : {
-                        this.creatures.push({type : name, id: this.creaturesCount ++});
-                    }
-                    default:{
-
-                    }
-                }
+                this.creatures.push({type : name, id: this.creaturesCount ++});
             }
         }
         , created(){
-            EventBus.$on('dragStart', this.dragStart);
+            EventBus.$on('dragStart', this.dragStartCreature);
             EventBus.$on('createCreature', this.createCreature)
         }
         , data(){
