@@ -1,18 +1,25 @@
 <template>
-    <div id="catNav">
-        <ul class="navList">
-            <li v-for="item in navList">
-                <button :name=item.text :title=item.text v-on:click="createCreature">
-                    <img v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
-                </button>
-            </li>
-        </ul>
+    <div id="catNav"
+         v-if="isDebug"
+         data-html2canvas-ignore="true"
+    >
+        <Slick v-bind:setting="setting">
+            <ul class="navList">
+                <li v-for="item in navList">
+                    <button :name=item.text :title=item.text v-on:click="createCreature">
+                        <div class="textBox" v-if="item.text === 'textBox'">TextBox</div>
+                        <img v-else v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
+                    </button>
+                </li>
+            </ul>
+        </Slick>
     </div>
 </template>
 
 <script>
     import config from "../config/config";
     import EventBus from "../util/EventBus";
+    import Slick from "./component/Slick";
 
     const navList = [
         {
@@ -35,19 +42,51 @@
             text : 'christmasTree',
             img : `${config.imgPath}/christmasTree.png`
         },
+        {
+            text : 'santa',
+            img : `${config.imgPath}/santa.png`
+        },
+        {
+            text : 'colorBall',
+            img : `${config.imgPath}/colorBall.png`
+        },
+        {
+            text : 'fruitBall',
+            img : `${config.imgPath}/fruitBall.png`
+        },
+        {
+            text : 'greenBall',
+            img : `${config.imgPath}/greenBall.png`
+        },
+        {
+            text : 'bear',
+            img : `${config.imgPath}/bear.png`
+        },
+        {
+            text : 'textBox',
+        },
     ];
+    const setting = {
+        "isHorizontal" : true
+        , "slidesToShow": 4
+        , "slidesToScroll": 1
+        , "slideMarginRight" : 12
+    };
 
     export default {
         name: "CatNav"
-        , data(){
-            return {
-                navList : navList
-            }
-        }
+        , components : {Slick}
         , methods: {
             createCreature(event){
                 const target = event.currentTarget;
                 EventBus.$emit('createCreature', target['name']);
+            }
+        }
+        , data(){
+            return {
+                navList : navList
+                , setting : setting
+                , isDebug : config.isDebug
             }
         }
     }
@@ -61,25 +100,31 @@
 
     #catNav{
         position:absolute;
+        bottom: 0;
         left: 0;
-        top : calc(40vh);
+        right: 0;
 
         display: flex;
         justify-content: center;
         align-items: center;
 
+        height: 80px;
         margin-left: 25px;
 
         .navList {
+            width: 750px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: wrap;
+            overflow: hidden;
 
             > li {
+                float:left;
                 width: 50px;
                 height: 50px;
                 text-align: center;
 
-                margin-bottom: 12px;
+                margin-right: 12px;
 
                 button {
                     display: block;
@@ -94,6 +139,15 @@
                         background-repeat: no-repeat;
                         background-position: center;
                         background-size: contain;
+                    }
+
+                    .textBox{
+                        color: #ffffff;
+                        font-size: 12px;
+                        line-height: 50px;
+                        height: 50px;
+
+                        border: 0.5px solid #ffffff;
                     }
                 }
 

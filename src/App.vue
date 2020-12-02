@@ -2,7 +2,7 @@
     <div id="app" v-on:drop="dropCreature" v-on:dragover="dragOverCreature">
         <Creature v-for="creature in creatures" :creature-type="creature.type" :creature-uuid="creature.uuid" :key="creature.uuid"></Creature>
         <CreatureNavigation/>
-        <Nav/>
+<!--        <Nav/>-->
         <JukeBox/>
         <Tools :creature-list="creatures"/>
     </div>

@@ -38,6 +38,8 @@
         right: 30px;
         bottom: 30px;
         background: #1e1e1e;
+
+        visibility: hidden;
     }
     .jukeBox {
         width: 340px;

@@ -1,7 +1,13 @@
 <template>
     <div class="tools"
+         v-if="isDebug"
+         data-html2canvas-ignore="true"
          v-bind:class="{active: isOpen}"
     >
+        <button class="toggleToolBox"
+                v-on:click="toggleToolBox"
+        > ㅡ
+        </button>
         <div class="creatureInfo">
             <h3>생성한 객체 정보</h3>
             <ul ref="creatureList" class="creatureList">
@@ -15,18 +21,23 @@
 
         <div class="horizontalBar"></div>
         <button v-on:click="deleteAllCreature"> 전체 삭제 </button>
+        <button v-on:click="saveAllCreature"> 이미지 저장 </button>
+
+        <a id="downloadTarget" style="display: none"></a>
     </div>
 </template>
 
 <script>
     import EventBus from "../../util/EventBus";
+    import html2canvas from "html2canvas";
+    import config from "../../config/config";
 
     export default {
         name: "Tools"
         , props : ["creatureList"]
         , methods: {
             toggleToolBox(){
-
+                this.isOpen = !this.isOpen;
             }
             , deleteCreature(event){
                 event.stopPropagation();
@@ -45,10 +56,19 @@
                 });
                 console.log(creatureList);
             }
+            , saveAllCreature(){
+                html2canvas(document.body).then(function(canvas) {
+                    const el = document.getElementById('downloadTarget');
+                    el.href = canvas.toDataURL('image/jpeg');
+                    el.download = 'christmasCard.jpg';
+                    el.click();
+                });
+            }
         }
         , data(){
             return {
                 isOpen : true
+                , isDebug : config.isDebug
             }
         }
     }
@@ -60,11 +80,13 @@
         right: 30px;
         top: 30px;
 
-        display: none;
         width: 180px;
         padding: 15px;
 
         background: #1e1e1e;
+        height: 35px;
+        transition: height 0.5s cubic-bezier(0, 0, 1, 1);
+        overflow-y: hidden;
 
         font-family: Arial;
         font-size: 14px;
@@ -73,14 +95,20 @@
             color: #ffffff;
             border: 1px solid #ffffff;
         }
+
+        .toggleToolBox{
+            position: absolute;
+            right : 15px;
+            top : 10px;
+        }
     }
 
     .tools.active{
-        display: block;
+        height: auto;
     }
 
     ul.creatureList{
-        margin: 5px 0px;
+        margin: 10px 0px;
         > li {
             > button {
                 color: #ffffff
