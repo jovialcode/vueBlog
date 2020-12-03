@@ -19,7 +19,7 @@
             TextBox
         </div>
         <img v-else
-                :src="creatureConfig[creatureType].img"
+             :src="creatureConfig[creatureType].img"
         />
     </div>
 </template>
