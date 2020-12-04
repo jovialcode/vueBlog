@@ -2,7 +2,6 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "jovialcode",
-  "main": "src/main.js",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
