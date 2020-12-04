@@ -66,6 +66,7 @@
 
             slideConfig['slideCount'] = slideList.childElementCount;
             slideConfig['slideWidth'] = slideListWidth / slideConfig['slideCount'];
+            slideConfig['slideCount'] = slideConfig['slideCount'] - slideConfig['slidesToShow'] + 1;
 
             const slideWrapperWidth = slideConfig['slideWidth'] * slideConfig['slidesToShow'];
 
