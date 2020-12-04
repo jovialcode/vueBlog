@@ -28,9 +28,9 @@
 </template>
 
 <script>
-    import EventBus from "../../util/EventBus";
+    import {EventBus} from "../utils";
     import html2canvas from "html2canvas";
-    import {envConfig} from "../../config";
+    import {envConfig} from "../configs";
 
     export default {
         name: "Tools"

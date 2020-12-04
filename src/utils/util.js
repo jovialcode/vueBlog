@@ -1,5 +1,5 @@
-const util = {
-    stringFormat(str){
+const StringUtil = {
+    format(str){
         let args = arguments;
         return str.replace(/{(\d+)}/g, (match, number) => {
             number = parseInt(number);
@@ -8,4 +8,4 @@ const util = {
     }
 };
 
-export default util;
+export default StringUtil;

@@ -1,15 +1,11 @@
 <template>
-    <div id="catNav"
-         v-if="isDebug"
-         data-html2canvas-ignore="true"
-    >
+    <div id="nav">
         <Slick v-bind:setting="setting">
             <ul class="navList">
-                <li v-for="(item, name) in navList">
-                    <button :name=name :title=name v-on:click="createCreature">
-                        <div class="textBox" v-if="name === 'textBox'">TextBox</div>
-                        <img v-else v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
-                    </button>
+                <li v-for="item in navList">
+                    <a :title=item.text>
+                        <img v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
+                    </a>
                 </li>
             </ul>
         </Slick>
@@ -17,33 +13,41 @@
 </template>
 
 <script>
-    import {envConfig, creatureConfig} from "../config";
-    import EventBus from "../util/EventBus";
-    import Slick from "./component/Slick";
+    import {envConfig} from "../configs";
+    import Slick from "./Slick";
 
-    const navList = creatureConfig;
-
+    const navList = [
+        {
+            text : 'article',
+            img : `${envConfig.imgPath}/snowman.png`
+        },
+        {
+            text : 'game',
+            img : `${envConfig.imgPath}/ornament.png`
+        },
+        {
+            text : 'game',
+            img : `${envConfig.imgPath}/tree.png`
+        },
+        {
+            text : 'rudolph',
+            img : `${envConfig.imgPath}/rudolph.png`
+        }
+    ];
     const setting = {
         "isHorizontal" : true
-        , "slidesToShow": 4
+        , "slidesToShow": 3
         , "slidesToScroll": 1
         , "slideMarginRight" : 12
     };
 
     export default {
-        name: "CatNav"
+        name: "Nav"
         , components : {Slick}
-        , methods: {
-            createCreature(event){
-                const target = event.currentTarget;
-                EventBus.$emit('createCreature', target['name']);
-            }
-        }
         , data(){
             return {
                 navList : navList
                 , setting : setting
-                , isDebug : envConfig.isDebug
             }
         }
     }
@@ -55,7 +59,7 @@
         height: 100%;
     }
 
-    #catNav{
+    #nav{
         position:absolute;
         bottom: 0;
         left: 0;
@@ -66,14 +70,14 @@
         align-items: center;
 
         height: 80px;
-        margin-left: 25px;
+        margin-bottom: 25px;
 
         .navList {
-            width: 750px;
+            width: 240px;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            overflow: hidden;
+            overflow-x: hidden;
 
             > li {
                 float:left;
@@ -83,7 +87,7 @@
 
                 margin-right: 12px;
 
-                button {
+                a {
                     display: block;
                     @include maxSize;
 
@@ -95,21 +99,11 @@
                         @include maxSize;
                         background-repeat: no-repeat;
                         background-position: center;
-                        background-size: contain;
-                    }
-
-                    .textBox{
-                        color: #ffffff;
-                        font-size: 12px;
-                        line-height: 50px;
-                        height: 50px;
-
-                        border: 0.5px solid #ffffff;
                     }
                 }
 
                 &:last-child{
-                    margin-bottom: 0;
+                    margin-right: 0;
                 }
             }
         }

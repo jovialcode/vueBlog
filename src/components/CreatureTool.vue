@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import EventBus from "../../util/EventBus"
+    import {EventBus} from "../utils"
 
     export default {
         name : "CreatureTool"

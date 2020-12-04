@@ -2,24 +2,32 @@
     <div id="app" v-on:drop="dropCreature" v-on:dragover="dragOverCreature">
         <Creature v-for="creature in creatures" :creature-type="creature.type" :creature-uuid="creature.uuid" :key="creature.uuid"></Creature>
         <CreatureNavigation/>
-<!--        <Nav/>-->
         <JukeBox/>
         <Tools :creature-list="creatures"/>
     </div>
 </template>
 
 <script>
-    import Nav from "./view/Nav";
-    import CreatureNavigation from "./view/CreatureNavigation";
-    import Creature from "./view/component/Creature";
-    import JukeBox from "./view/component/JukeBox";
-    import Tools from "./view/component/Tools";
-    import EventBus from "./util/EventBus";
+    import Nav from "../components/Nav";
+    import CreatureNavigation from "../components/CreatureNavigation";
+    import Creature from "../components/Creature";
+    import JukeBox from "../components/JukeBox";
+    import Tools from "../components/Tools";
+    import EventBus from "../utils/eventBus";
 
     let currentTarget;
-
     export default {
-        components : {
+        head: {
+            script: [
+                {
+                    type: 'text/javascript'
+                    , src: 'https://www.radio.net/inc/microsite/js/full.js'
+                    , id : 'radio-de-embedded'
+                    , async: true
+                }
+            ]
+        }
+        , components : {
             Nav
             , CreatureNavigation
             , Creature

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import util from '../../util/util';
+    import {StringUtil} from '../utils';
     let slideList;
     let slideConfig = {
         slideSpeed : 300 // 슬라이드 속력
@@ -24,7 +24,7 @@
 
             if (curIndex > 0 && curIndex < slideConfig['slideCount']) {
                 curPosition = curPosition + (isLeft? (slideConfig['slideWidth']) : -slideConfig['slideWidth']);
-                slideList.style.transform = util.stringFormat('translate3d({0}px, 0px, 0px)', curPosition);
+                slideList.style.transform = StringUtil.format('translate3d({0}px, 0px, 0px)', curPosition);
             } else {
                 if(isLeft){
                     curIndex = slideConfig['slideCount'] - 1;
@@ -33,7 +33,7 @@
                     curIndex = 1;
                     curPosition = 0;
                 }
-                slideList.style.transform = util.stringFormat('translate3d({0}px, 0px, 0px)', curPosition);
+                slideList.style.transform = StringUtil.format('translate3d({0}px, 0px, 0px)', curPosition);
             }
         }
     };

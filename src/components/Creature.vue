@@ -25,8 +25,8 @@
 </template>
 
 <script>
-    import EventBus from "../../util/EventBus";
-    import {creatureConfig} from '../../config';
+    import {EventBus} from "../utils";
+    import {creatureConfig} from '../configs';
     import CreatureTool from "./CreatureTool";
 
     const creatureList = creatureConfig;
