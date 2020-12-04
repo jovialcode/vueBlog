@@ -11,80 +11,25 @@
                 v-if="isActive"
                 :isEditable = isEditable
                 v-on:editableCreature="clickEditable"
-                :option = "creatureConfig[creatureType]"
+                :option = "creatureList[creatureType]"
         />
         <div class="textBox"
              :contenteditable="isEditable? true : false"
-             v-if="!creatureConfig[creatureType].img">
+             v-if="!creatureList[creatureType].img">
             TextBox
         </div>
         <img v-else
-             :src="creatureConfig[creatureType].img"
+             :src="creatureList[creatureType].img"
         />
     </div>
 </template>
 
 <script>
-    import EventBus from "../../util/EventBus"
+    import EventBus from "../../util/EventBus";
+    import {creatureConfig} from '../../config';
     import CreatureTool from "./CreatureTool";
 
-    const creatureConfig = {
-        firePlace : {
-            img : '/img/firePlace.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , light : {
-            img : '/img/light.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , catShocks : {
-            img : '/img/catShocks.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , cat :{
-            img : '/img/persian.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , christmasTree : {
-            img : '/img/christmasTree.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , santa : {
-            img : '/img/santa.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , colorBall : {
-            img : '/img/colorBall.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , fruitBall : {
-            img : '/img/fruitBall.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , greenBall : {
-            img : '/img/greenBall.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , bear : {
-            img : '/img/bear.png'
-            , isResizable : true
-            , isEditable : false
-        }
-        , textBox : {
-            img : null
-            , isResizable : false
-            , isEditable : true
-        }
-    };
+    const creatureList = creatureConfig;
 
     export default {
         name: "Creature"
@@ -107,7 +52,7 @@
             return {
                 isActive : false
                 , isEditable : false
-                , creatureConfig : creatureConfig
+                , creatureList : creatureList
             }
         }
     }

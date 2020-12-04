@@ -5,9 +5,9 @@
     >
         <Slick v-bind:setting="setting">
             <ul class="navList">
-                <li v-for="item in navList">
-                    <button :name=item.text :title=item.text v-on:click="createCreature">
-                        <div class="textBox" v-if="item.text === 'textBox'">TextBox</div>
+                <li v-for="(item, name) in navList">
+                    <button :name=name :title=name v-on:click="createCreature">
+                        <div class="textBox" v-if="name === 'textBox'">TextBox</div>
                         <img v-else v-bind:style="{ backgroundImage: 'url(' + item.img + ')' }">
                     </button>
                 </li>
@@ -17,55 +17,12 @@
 </template>
 
 <script>
-    import config from "../config/config";
+    import {envConfig, creatureConfig} from "../config";
     import EventBus from "../util/EventBus";
     import Slick from "./component/Slick";
 
-    const navList = [
-        {
-            text : 'cat',
-            img : `${config.imgPath}/persian.png`
-        },
-        {
-            text : 'catShocks',
-            img : `${config.imgPath}/catShocks.png`
-        },
-        {
-            text : 'light',
-            img : `${config.imgPath}/light.png`
-        },
-        {
-            text : 'firePlace',
-            img : `${config.imgPath}/firePlace.png`
-        },
-        {
-            text : 'christmasTree',
-            img : `${config.imgPath}/christmasTree.png`
-        },
-        {
-            text : 'santa',
-            img : `${config.imgPath}/santa.png`
-        },
-        {
-            text : 'colorBall',
-            img : `${config.imgPath}/colorBall.png`
-        },
-        {
-            text : 'fruitBall',
-            img : `${config.imgPath}/fruitBall.png`
-        },
-        {
-            text : 'greenBall',
-            img : `${config.imgPath}/greenBall.png`
-        },
-        {
-            text : 'bear',
-            img : `${config.imgPath}/bear.png`
-        },
-        {
-            text : 'textBox',
-        },
-    ];
+    const navList = creatureConfig;
+
     const setting = {
         "isHorizontal" : true
         , "slidesToShow": 4
@@ -86,7 +43,7 @@
             return {
                 navList : navList
                 , setting : setting
-                , isDebug : config.isDebug
+                , isDebug : envConfig.isDebug
             }
         }
     }

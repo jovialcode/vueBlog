@@ -30,7 +30,7 @@
 <script>
     import EventBus from "../../util/EventBus";
     import html2canvas from "html2canvas";
-    import config from "../../config/config";
+    import {envConfig} from "../../config";
 
     export default {
         name: "Tools"
@@ -68,7 +68,7 @@
         , data(){
             return {
                 isOpen : true
-                , isDebug : config.isDebug
+                , isDebug : envConfig.isDebug
             }
         }
     }

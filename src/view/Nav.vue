@@ -13,25 +13,25 @@
 </template>
 
 <script>
-    import config from "../config/config";
+    import {envConfig} from "../config";
     import Slick from "./component/Slick";
 
     const navList = [
         {
             text : 'article',
-            img : `${config.imgPath}/snowman.png`
+            img : `${envConfig.imgPath}/snowman.png`
         },
         {
             text : 'game',
-            img : `${config.imgPath}/ornament.png`
+            img : `${envConfig.imgPath}/ornament.png`
         },
         {
             text : 'game',
-            img : `${config.imgPath}/tree.png`
+            img : `${envConfig.imgPath}/tree.png`
         },
         {
             text : 'rudolph',
-            img : `${config.imgPath}/rudolph.png`
+            img : `${envConfig.imgPath}/rudolph.png`
         }
     ];
     const setting = {
