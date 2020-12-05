@@ -3,6 +3,7 @@
         <Creature v-for="creature in creatures" :creature-type="creature.type" :creature-uuid="creature.uuid" :key="creature.uuid"></Creature>
         <CreatureNavigation/>
         <JukeBox/>
+        <User/>
         <Tools :creature-list="creatures"/>
     </div>
 </template>
@@ -12,6 +13,7 @@
     import CreatureNavigation from "../components/CreatureNavigation";
     import Creature from "../components/Creature";
     import JukeBox from "../components/JukeBox";
+    import User from "../components/User";
     import Tools from "../components/Tools";
     import EventBus from "../utils/eventBus";
 
@@ -29,6 +31,7 @@
         }
         , components : {
             Nav
+            , User
             , CreatureNavigation
             , Creature
             , JukeBox
