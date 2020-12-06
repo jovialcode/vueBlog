@@ -14,17 +14,15 @@ export default {
         '@/static/css/font.css'
     ]
     , plugins: [
-
+        'plugins/localStorage',
+        'plugins/axios'
     ]
     , modules: [
         '@nuxtjs/axios',
         '@nuxtjs/proxy'
     ]
     , axios: {
-        proxy: true
-    }
-    , proxy: {
-        '/api/': { target: 'localhost:8080', pathRewrite: {'^/api/': ''}, changeOrigin: true }
+        baseURL: 'http://localhost:8080'
     }
     , http: {}
     , build: {

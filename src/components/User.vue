@@ -13,7 +13,8 @@
             }
         }
         , async fetch(){
-            this.user = await fetch('http://localhost:8080/api/users/me').then((res)=>res.json());
+            const res = await this.$axios.get('/api/users/me');
+            this.user = res.data;
         }
     }
 </script>
