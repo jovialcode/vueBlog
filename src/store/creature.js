@@ -1,4 +1,5 @@
 import Creature from "../models/Creature";
+import {AUTH_MUTATIONS} from "./auth";
 
 export const CREATURE_MUTATIONS = {
     INSERT_CREATURE : 'INSERT_CREATURE'
@@ -33,7 +34,14 @@ export const actions = {
     },
 
     async save({commit, dispatch}){
+        const { refreshToken } = state
 
+        const { data: { data: { payload } } } = await this.$axios.post(
+            '/api/auth/refresh',
+            { refreshToken }
+        );
+
+        commit(AUTH_MUTATIONS.SET_PAYLOAD, payload);
     }
 };
 

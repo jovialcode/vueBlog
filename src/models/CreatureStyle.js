@@ -2,13 +2,13 @@ export default class CreatureStyle {
     constructor(
         width
         , height
-        , positionX
-        , positionY
+        , left
+        , top
     ) {
         this._width = width;
         this._height = height;
-        this._positionY = positionY;
-        this._positionX = positionX;
+        this._top = top | 0;
+        this._left = left | 0;
     }
 
     get width() {
@@ -27,19 +27,19 @@ export default class CreatureStyle {
         this._height = value;
     }
 
-    get positionX() {
-        return this._positionX;
+    get left() {
+        return this._left;
     }
 
-    set positionX(value) {
-        this._positionX = value;
+    set left(value) {
+        this._left = value;
     }
 
-    get positionY() {
-        return this._positionY;
+    get top() {
+        return this._top;
     }
 
-    set positionY(value) {
-        this._positionY = value;
+    set top(value) {
+        this._top = value;
     }
 }
