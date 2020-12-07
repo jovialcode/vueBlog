@@ -1,16 +1,15 @@
+export const AUTH_MUTATIONS = {
+    SET_USER: 'SET_USER'
+    , SET_PAYLOAD: 'SET_PAYLOAD'
+    , LOGOUT: 'LOGOUT'
+};
+
 export const state = () => ({
     accessToken : null
     , refreshToken : null
     , id : null
     , email : null
 });
-
-export const AUTH_MUTATIONS = {
-    SET_USER: 'SET_USER',
-    SET_PAYLOAD: 'SET_PAYLOAD',
-    LOGOUT: 'LOGOUT',
-};
-
 
 export const mutations = {
     [AUTH_MUTATIONS.SET_USER] (state, { id, email }) {
@@ -46,7 +45,6 @@ export const actions = {
     },
 
     async register ({ commit }, { email, password }) {
-        // make an API call to register the user
         const { data: { data: { user, payload } } } = await this.$axios.post(
             '/api/auth/register',
             { email, password }

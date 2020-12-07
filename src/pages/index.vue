@@ -56,11 +56,21 @@
             }
             , deleteCreature(uuid){
                 const targetIndex = this.creatures.findIndex(x => x.uuid === Number(uuid));
-                this.creatures.splice(targetIndex, 1);
+                this.$store.dispatch('creature/delete', targetIndex);
             }
             , createCreature(name){
                 if(name === undefined) throw Error('no');
-                this.creatures.push({type : name, uuid: this.creaturesCount++});
+                this.$store.dispatch('creature/insert', {
+                    type : name
+                    , uuid: this.creaturesCount++
+                });
+            }
+        }
+        , computed: {
+            creatures:{
+                get(){
+                    return this.$store.state.creature.creatureList;
+                }
             }
         }
         , created(){
@@ -71,7 +81,6 @@
         , data(){
             return {
                 message: 'Merry Christmas'
-                , creatures : []
                 , creaturesCount : 1
             };
         },

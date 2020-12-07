@@ -9,6 +9,7 @@ export default {
         , link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     }
     , srcDir: 'src/'
+    //, watch : ['~/**/*']
     , css: [
         '@/static/css/reset.css',
         '@/static/css/font.css'
