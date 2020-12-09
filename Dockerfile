@@ -10,7 +10,6 @@ RUN npm install --production
 
 #network setting
 ENV HOST 0.0.0.0
-EXPOSE 3000
 
 #start command
 CMD ["npm", "start"]
