@@ -23,8 +23,9 @@ export default {
         '@nuxtjs/proxy'
     ]
     , axios: {
-        baseURL: 'http://localhost:8080'
+        baseURL: process.env.BASE_API_URL || 'http://localhost:8888'
     }
+    , dev : process.env.NODE_ENV !== 'production'
     , http: {}
     , build: {
         extend(config, ctx) {}

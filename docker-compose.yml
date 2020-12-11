@@ -2,5 +2,8 @@ version: "3"
 services:
   playground:
     image: jovialcode/playground:latest
+    container_name: playground
     ports:
-      - 3000:3000
+      - 4500:3000
+    environment:
+      BASE_API_URL: localhost:8888
