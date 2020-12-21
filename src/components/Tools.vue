@@ -22,6 +22,7 @@
         <div class="horizontalBar"></div>
         <button v-on:click="deleteAllCreature"> 전체 삭제 </button>
         <button v-on:click="saveAllCreature"> 이미지 저장 </button>
+        <User/>
 
         <a id="downloadTarget" style="display: none"></a>
     </div>
@@ -30,11 +31,13 @@
 <script>
     import {EventBus} from "../utils";
     import html2canvas from "html2canvas";
+    import User from "./User";
     import {envConfig} from "../configs";
 
     export default {
         name: "Tools"
         , props : ["creatureList"]
+        , components : {User}
         , methods: {
             toggleToolBox(){
                 this.isOpen = !this.isOpen;

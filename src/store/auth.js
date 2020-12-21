@@ -1,3 +1,5 @@
+import jwt_decode from "jwt-decode";
+
 export const AUTH_MUTATIONS = {
     SET_USER: 'SET_USER'
     , SET_PAYLOAD: 'SET_PAYLOAD'
@@ -7,24 +9,28 @@ export const AUTH_MUTATIONS = {
 export const state = () => ({
     accessToken : null
     , refreshToken : null
-    , id : null
+    , name : null
     , email : null
+    , role : null
 });
 
 export const mutations = {
-    [AUTH_MUTATIONS.SET_USER] (state, { id, email }) {
-        state.id = id;
+    [AUTH_MUTATIONS.SET_USER] (state, { name, email }) {
+        state.name = name;
         state.email = email;
     }
     , [AUTH_MUTATIONS.SET_PAYLOAD] (state, { accessToken, refreshToken = null }) {
         state.accessToken = accessToken;
+
+        const decoded = jwt_decode(accessToken);
+        state.role = decoded.role;
 
         if (refreshToken) {
             state.refreshToken = refreshToken
         }
     }
     , [AUTH_MUTATIONS.LOGOUT] (state) {
-        state.id = null;
+        state.name = null;
         state.email = null;
         state.accessToken = null;
         state.refreshToken = null;

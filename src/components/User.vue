@@ -1,6 +1,8 @@
 <template>
     <div>
-        <span>{{user}}</span>
+        <div>
+            <button v-on:click="getMe">내 정보 가져오기</button>
+        </div>
     </div>
 </template>
 
@@ -12,9 +14,11 @@
                 user : null
             }
         }
-        , async fetch(){
-            const res = await this.$axios.get('/api/users/me');
-            this.user = res.data;
+        , methods : {
+            async getMe(){
+                const res = await this.$axios.get('/api/users/me');
+                this.user = res.data;
+            }
         }
     }
 </script>
